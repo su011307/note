@@ -7,11 +7,15 @@
 === 6.1.21
 利用内积的转置定义，验证定理1中的 (b) 和 (c)，注意第二章的一些内容
 
-设 $bold(v), bold(u), bold(w)$ 是 $RR^n$ 中的向量， $c$ 是一个数，那么：
+#quote(block: true)[
+  *定理 1*
 
-(b) $(bold(u) + bold(v)) dot bold(w) = bold(u) dot bold(w) + bold(v) dot bold(w)$
+  设 $bold(v), bold(u), bold(w)$ 是 $RR^n$ 中的向量， $c$ 是一个数，那么：
 
-(c) $(c bold(u)) dot bold(v) = c(bold(u) dot bold(v)) = bold(u) dot (c bold(v))$
+  (b) $(bold(u) + bold(v)) dot bold(w) = bold(u) dot bold(w) + bold(v) dot bold(w)$
+
+  (c) $(c bold(u)) dot bold(v) = c(bold(u) dot bold(v)) = bold(u) dot (c bold(v))$
+]
 
 ==== 证明
 我们知道内积的定义是
