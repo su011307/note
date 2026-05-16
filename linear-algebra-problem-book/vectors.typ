@@ -103,6 +103,8 @@ ${(1,0), (0,1)}$ 和 ${(2,0), (0,2)}$，$RR^3$
 ]
 
 == Solution
+遇到这种题，首先想到的思路是左右两边互相包含，进而推导出相等
+
 $bold(x) in.not MM$，但是 $bold(x) in or.big {MM, bold(y)}$，说明 $bold(x) = sum_i c_i bold(m_i) + k bold(y), bold(m_i) in MM, k != 0, exists c_i != 0$，那么 $or.big {MM, bold(x)} <=> or.big {MM, k bold(y)} <=> or.big {MM, bold(y)}$ 
 
 #line(length: 100%)
@@ -112,3 +114,20 @@ $bold(x) in.not MM$，但是 $bold(x) in or.big {MM, bold(y)}$，说明 $bold(x)
 #quote(block: true)[
   *Problem 28.* Is it true that if $LL, MM$ and $NN$ are subspaces of a vector space, then $ LL union (MM + (LL union NN)) = (LL union MM) + (LL union NN)? $
 ]
+
+=== 模律
+这个题目就是集合中的模律，可以理解为一种弱式的分配律
+
+== Solution
+
+#line(length: 100%)
+
+= 29. Distributive subspaces
+
+#line(length: 100%)
+
+= 30. Total sets
+
+#line(length: 100%)
+
+= 32. Independence
