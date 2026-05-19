@@ -4,7 +4,9 @@
 
 = 记号
 
-- 卷积的记号：$y[t] = x[t] convolution h[t]$
+- 卷积的记号：$y[t] = x[t] convolve h[t]$
+- 单位阶跃函数：$u[t]$
+- 单位冲激函数：$delta[t]$
 
 = 卷积
 
@@ -12,4 +14,51 @@
 
 写成形式化的表达式，即：
 
-$y[t] = sum_(-infinity)^(+infinity) x[t] h[t-k]$
+$y[t] = x[t] convolve h[t] = sum_(tau -infinity)^(+infinity) x[tau] h[t - tau]$ 或者 $y(t) = x(t) convolve h(t) = integral_(tau = -oo)^(oo) x(tau) h(t - tau) dif tau$
+
+可以看看卷积的数学表达式，尝试理解它背后在做什么。Tips，$h(t-tau)$ 表示向右偏移 $tau$ 个单位
+
+== 性质
+
+卷积相比于 _Linear Algebra Problem Book_ 中人为构造的一堆猎奇数学结构性质好多了，你能想到的最好的卷积都有，包括：
+
+- *可交换*：$x[t] convolve h[t] = h[t] convolve x[t]$，这意味着把 $x[t]$ 看成输入，把 $h[t]$ 看成 LTI 对单位冲激的响应是没错的；但是反过来，把 $h[t]$ 看成 $x'[t]$ 输入，把 $x[t]$ 看成 $h'[t]$ 响应也是没问题的
+- *可结合*：$x[t] convolve h_1[t] convolve h_2[t] = x[t] convolve (h_1[t] convolve h_2[t])$，这意味着两个 LTI 级联在一起，和分别应用两个 LTI 没有区别
+- *可分配*：$x[t] convolve (h_1[t] + h_2[t]) = x[t] convolve h_1[t] + x[t] convolve h_2[t]$，这意味着两个并联的 LTI 输出，等于两个 LTI 分别的输出的叠加
+
+= 奇异函数
+
+对于信号与系统，我们大量使用了 $delta[t]$、$u[t]$ 这类函数。它们严格来讲并不属于典型的函数，最好的理解办法是透过卷积
+
+=== 单位冲激函数 $delta(t)$（或者 $u_0(t)$）
+
+以单位冲激函数为例：
+
+$ 
+  cases(
+    x(t) convolve delta(t) = x(t),
+    delta(t) convolve delta(t) = delta(t)
+  )
+$
+
+不难看出，$delta(t)$ 起到的作用类似于乘法 Abelian 群中的 $1$，作为“单位元”
+
+=== 单位阶跃函数 $u(t)$（或者 $u_1(t)$）
+
+那么单位阶跃函数呢？单位阶跃函数是这样的：
+
+$ x(t) convolve u(t) = integral_(-oo)^t x(tau) dif tau $
+
+回想一下我们在模拟电路中学过的知识，这就是一个 *积分器*，将所有的输入累加起来，不是吗？
+
+=== 单位冲激偶 $u_(-1)(t)$
+
+我们都知道，$(dif u(t)) / (dif t) = delta(t)$。那么这样的关系是不是可以继续往下推进呢？我们可不可以对 $delta(t)$ 也应用同样的求微分？答案是可以，我们规定 $(dif delta(t))/(dif t) = u_(-1)(t)$，称之为 *单位冲激偶*。它是两个几乎紧密连接在一起的 $+oo$ 和 $-oo$（想象一下对 $delta(t)$ 这样一个“无穷大”的两个边沿求导，是不是分别是两个“更大”的无穷大和无穷小）
+
+=== 单位斜坡函数 $u_2(t)$
+
+从函数的下标中也能看出一些端倪，这应该是对 $u_1(t)$ 的积分，对吧？积出来的右半段是 $y=x$，左边是 $y=0$，还算简单
+
+== 小结
+
+我们从下标中可以看到一些规律，如果有一个奇异函数 $u_k(t)$，如果 $k>0$，它是一个积分器；如果 $k<0$，它是一个微分器
