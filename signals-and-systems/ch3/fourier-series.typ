@@ -1,3 +1,5 @@
+#let fs = stack("FS", math.arrow.l.r.long)
+
 = 傅里叶级数
 不同于接下来要讲的 Fourier Transformation，Fourier Series 是针对本身已经是周期函数的函数而言的。其核心思想很简单，一切性质良好的周期函数都可以分解成若干个 sinusoids 的线性加和
 
@@ -22,10 +24,47 @@ $
 Fourier Transfomation/Series 经常和“频域”、“时域”两个概念连接起来。这两个“域”，我暂时未能看出和 Galois Field 有何关联🥲，不妨暂时理解为“时间上的向量空间”和“频率上的向量空间”吧。根据 Fourier Series 的表达式，我们不难发现，等式左侧 $x(t)$ 是一个关于时间的函数，而右侧，这个时间的函数被拆分为了若干个周期函数（$e^(j k omega_0 t)$）的求和。我们不妨把这个求和看成一个函数，那么这个函数中唯一变化的是 $k omega_0$。换言之，原本时间上的函数（$t$ 为自变量）被转换为若干个频率函数（以 $omega$ 为自变量，$t$ 只作为参数，我们把整体的 $e^(j t)$ 看成一个抽象的算子整体#footnote[事实上，这里的函数算子 $e^(j k omega_0 t)$ 依旧以 $t$ 作为自变量，但是在上层的求和中，在变化的是 $k omega_0$，亦即频率。如果有点抽象，可以把 $e^(j t)$ 类比成编程语言中的 `fn`（回顾一下`fn`和`fn()`的区别！） ]）的和，它们实现了“时域”和“频域”的转换
 
 == 好的性质
-Fourier Series 性质太好了（至少比抽代中各种人为构造的猎奇数学结构好得多）
 
-- linearity
-- 
+Fourier Series 性质太好了（至少比抽代中各种人为构造的猎奇数学结构好得多）。一个信号 $x(t)$ 的傅里叶系数可以这么表示：$x(t) fs a_k$
+
+=== 线性
+
+$
+  x(t) fs a_k, y(t) fs b_k\
+  ==> z(t) = A x(t) + B y(t) fs c_k = A a_k + B b_k
+$
+
+=== 时移
+
+不妨再仔细观察一下 Fourier Coefficients 的结构
+
+$
+  a_k = 1/T integral_T x(t) e^(-j k omega_0 t) dif t
+$
+
+看到了 $e^(j omega t)$，理应条件反射地想到极坐标，对吧？那么时移，就是相当于一个相位 offset，那么不就很自然地
+
+$
+  b_k = 1/T integral_T x(t-t_0) e^(-j k omega (t-t_0)) dif t
+$
+
+别忘了 $x(t)$ 本身是周期信号，所以上面的式子可以化简为
+
+$
+  b_k = e^(-j k omega t_0) 1/T integral_T x(t) e^(-j k omega (t-t_0)) dif t\
+  ==> b_k = e^(-j k omega t_0) a_k\
+  <==> x(t-t_0) fs e^(-j k omega t_0) a_k
+$
+
+=== 其它性质
+
+这些性质都很符合直觉，或者需要在 `problems.typ` 中证明，这里不再花太多笔墨
+
+- 反方向的钟：如果将时间反转（即$t |-> -t$），那么$x(-t) fs a_(-k)$
+
+- 时域变换：$x(alpha t) fs sum_(k=-oo)^(+oo) a_k e^(j k (alpha omega_0) t)$
+
+- 相乘：$x(t)y(t) fs h_k = sum_(l=-oo)^(+oo) a_l b_(l-k)$
 
 = 概念
 == 频谱
@@ -64,4 +103,4 @@ $
 = 帕？？定理
 不想写，VS Code 的 Typst 自动补全坏了
 
-= 滤波器
+= 滤波
